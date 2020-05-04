@@ -2,56 +2,42 @@ using System;
 
 namespace DependencyInjectiion
 {
-    //Client Class -The client class is a class which depends on the service class
-    //Service Class- Service class is a class which provides service to the client class
-    //Injector class-Injactor class is a class which injects objects from service class to client class
-
     class Program
-    {
-        static void Main(string[] args)
+    {        static void Main()
         { 
-            //Injection
-            BusinessLogicservice objbusiness = new BusinessLogicservice(new TeacherService());
-
+            BusinessLogicService objbusiness = new BusinessLogicService(new TeacherService());
             Console.ReadKey();
         }
     } 
-    //Client Class
-    public class BusinessLogicservice
+      public class BusinessLogicService
+    {
+        private IService _IService;
+        public BusinessLogicService(IService _IService)
         {
-        private Iservice _iService;
-        public BusinessLogicservice(Iservice _iService)
-        {
-            this._iService = _iService;
-            this._iService.GetFirstName();
-            this._iService.GetLastName();
+            this._IService = _IService;
+            this._IService.GetFirstName();
+            this._IService.GetLastName();
         }
-
-
         }
-  public interface Iservice
+  public interface IService
     {
         void GetFirstName();
         void GetLastName();
-
-
     } 
     //Service Class
-    public class StudentService : Iservice
+    public class StudentService : IService
     {
         public void GetFirstName()
         {
             Console.WriteLine("Student First Name");
         }
-
         public void GetLastName()
         {
             Console.WriteLine("Student Last Name");
         }
     }
-    public class TeacherService : Iservice
-    {
-        public void GetFirstName()
+    public class TeacherService : IService
+    {        public void GetFirstName()
         {
             Console.WriteLine("Teacher First Name");
         }
